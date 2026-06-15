@@ -52,21 +52,23 @@ void monitorarComodo(int *estadoComodo, char nomeComodo[20], char nomeAparelho[2
     }
 }
 int main() {
-    int estadoComodo = 1; // 1 para ligado, 0 para desligado
+    int estadosAparelhos = {1,1,1,1} // 1 para ligado, 0 para desligado //
     char nomesComodos[4][20] = {"Sala de Estar", "Cozinha", "Quarto", "Banheiro"};
-    char nomeAparelho [4][20] = {"TV", "forno eletrico", "luz","climatizador"};
-    float consumoEnergiaTv = 0.5; // consumo em kWh
-    float consumoEnergiaLuz = 0.3; // consumo em kWh
-    float consumoEnergiaForno = 1.0; // consumo em kWh
-    float consumoEnergiaClimatizador = 0.8; // consumo em kWh
+    char nomeAparelho [4][20] = {"TV", "forno eletrico", "climatizador","luz"};
+    float consumoEnergia[4]={0.5, 1.0, 0.8, 0.3};
     int continuar =1;
+    int i;
+    float consumoTotalCasa = 0.0;
+
     while (continuar==1) {
-        monitorarComodo(&estadoComodo, nomesComodos[0], nomeAparelho[0], consumoEnergiaTv, consumoEnergiaLuz, consumoEnergiaForno, consumoEnergiaClimatizador);
-        printf("deseja voltar ao menu de monitoramento? (1 - sim, 0 - nao): ");
-        if (scanf("%d", &continuar) != 1){
-            printf("Entrada invalida. Encerrando o programa.\n");
-            break;
-        }
+        int escolhaAparelho;
+        char status [10];
+        
+        printf ("\n========DISPOSITIVOS DISPONIVEIS========\n");
+        for (i=0;i<4;i++);
+            strcpy(status,estadosAparelhos[i]== 1? "LIGADO" : "DESLIGADO");
+            printf("%d - %s (%s) [%s]\n",i,nomeAparelho[i], nomeComodos[i],status)
     }
+    
     return 0;
 }
