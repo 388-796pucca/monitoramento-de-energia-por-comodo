@@ -2,41 +2,52 @@
 #include <stdlib.h>
 #include <string.h>
 
-void monitorarComodo(int *estadoComodo, char nomeComodo[20], char nomeAparelho[20], float consumoEnergiaTv, float consumoEnergiaLuz, float consumoEnergiaForno, float consumoEnergiaClimatizador) {
+void monitorarComodo(int *estadoComodo, char nomeComodo[20], char nomeAparelho[20], float consumoEnergia) {
+   int opcao;  
     printf("\n--- ALERTA DE ENERGIA ---\n");
     printf("\n--- menu ---\n");
     printf("1- verificar energia consumida\n");
     printf("2- desligar o aparelho\n");
+    printf("3- ligar o aparelho\n")
     printf("0- sair\n");
-    int opcao;
     printf("escolha: ");
+
     if (scanf("%d", &opcao) != 1){
         printf("Entrada invalida. Encerrando o monitoramento.\n");
+        while (getchar()!='\n');
         return;
     }
     if (opcao==1){
         if (*estadoComodo == 0){
-            printf("o comodo não esta consumindo energia\n");
-        } else {
-            printf("\n A TV na sala esta ligado\n");
-            printf("O aparelho esta consumindo %.2f kWh\n", consumoEnergiaTv);
-            printf("\n a luz do comodo quarto esta acesa\n");
-            printf("o objeto está está consumindo %.2f kWh\n", consumoEnergiaLuz);
-            printf("\n o forno eletrico da cozinha esta ligado\n");
-            printf(" o forno eletrico esta consumindo %.2f kWh\n", consumoEnergiaForno);
-            printf("\n o climatizador da sala esta ligado\n");
-            printf("o climatizador esta consumindo %.2f kWh\n", consumoEnergiaClimatizador);
+            printf("O aparelho %s no(a) %s esta desligado e nao esta consumindo energia\n" , nomeAparelho, nomeComodo);
         }
-    } else if (opcao==2){
+        else {
+            printf("\n O(a) %s no(a) %s esta ligado(a)!\n",nomeAparelho,nomeComodo);
+            printf("Consumo atual: %2f kWh\n",consumoEnergia);
+        }
+    }
+    else if (opcao==2){
         if (*estadoComodo == 1){
             *estadoComodo = 0;
-            printf("sucesso ao desligar o aparelho\n");
-        } else {
-            printf("O aparelho já está desligado\n");
+            printf("sucesso !Aparelho %s no(a) foi desligado\n",nomeAparelho,nomeComodo);
+        } 
+        else {
+            printf("O aparelho %s já está desligado\n", nomeAparelho);
         }
-    } else if (opcao==0){
-        printf("Encerrando o monitoramento...\n");
-    } else {
+    } 
+    else if (opcao==3){
+        if (*estadoComodo == 0){
+            *estadoComodo = 1;
+            printf("sucesso !Aparelho %s no(a) foi ligado\n",nomeAparelho,nomeComodo);
+        } 
+        else {
+            printf("O aparelho %s já está ligado\n", nomeAparelho);
+        }
+    } 
+    else if (opcao==0){
+        printf("Voltando ao menu principal...\n");
+    } 
+        else {
         printf("Opcao invalida. Tente novamente.\n");
     }
 }
