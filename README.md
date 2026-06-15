@@ -19,11 +19,10 @@ Funciona como um sub-menu dedicado para gerenciar um único aparelho por vez.
 * **Lógica de Estados:** Avalia o valor contido no ponteiro (0 para desligado, 1 para ligado) para alternar o status do aparelho e exibir feedbacks em tempo real para o usuário.
 
 ### 2. Função `main`
-A espinha dorsal do programa. Responsável por inicializar os dados, gerenciar o loop principal de navegação e consolidar os resultados.
 
 * **Paralelismo de Arrays (Estrutura de Dados):** O sistema utiliza 4 arrays distintas (`estadosAparelhos`, `nomesComodos`, `nomeAparelho`, `consumosEnergia`), onde o índice `i` correlaciona todas as informações de um mesmo cômodo/aparelho. *(Nota de arquitetura: Uma abordagem funcional para C básico que simula o comportamento de um banco de dados relacional simples).*
-* **Loop Principal (`while (continuar == 1)`):** Mantém a interface de linha de comando (CLI) rodando continuamente, permitindo ao usuário alternar entre os cômodos livremente até decidir encerrar.
-* **Validação de Limites de Memória:** Garante a segurança da aplicação validando se a escolha do usuário está estritamente entre os índices válidos (0 a 3). Isso previne erros graves de *segmentation fault* ou comportamentos indefinidos.
+* **Loop Principal (`while (continuar == 1)`):** Mantém a interface de linha de comando  rodando continuamente, permitindo ao usuário alternar entre os cômodos livremente até decidir encerrar.
+* **Validação de Limites de Memória:** Garante a segurança da aplicação validando se a escolha do usuário está estritamente entre os índices válidos (0 a 3). Isso previne erros graves e comportamentos indefinidos.
 * **Relatório Final Dinâmico:** Ao encerrar o programa (digitando `-1`), o loop é interrompido. O sistema limpa a tela e renderiza uma tabela formatada utilizando alinhamentos precisos (`%-15s`). Durante essa varredura, o consumo acumulado (`consumoTotalCasa`) é calculado dinamicamente, somando apenas o gasto dos aparelhos que terminaram com o status **1 (Ligado)**.
 
 ---
@@ -31,40 +30,13 @@ Funcionalidades do Sistema
 
 A aplicação foi projetada para ser intuitiva, segura e resiliente a falhas de operação. Suas principais funcionalidades são:
 
-* **Painel de Navegação CLI (Interface de Linha de Comando):** Um menu interativo que centraliza o acesso aos cômodos da residência.
+* **Painel de Navegação:** Um menu interativo que centraliza o acesso aos cômodos da residência.
 * **Gerenciamento de Estado Individual (Sub-menus):** Interface isolada para cada aparelho, permitindo ligar ou desligar o dispositivo e visualizar seu status atual em tempo real.
-* **Tratamento de Entradas Inválidas (Anti-Crash):** O sistema possui um mecanismo de defesa contra entradas incorretas. Se o usuário digitar letras ou símbolos onde um número é esperado, o programa não entra em loop e não quebra; ele limpa o canal de entrada e solicita o dado novamente.
+* **Tratamento de Entradas Inválidas :** O sistema possui um mecanismo de defesa contra entradas incorretas. Se o usuário digitar letras ou símbolos onde um número é esperado, o programa não entra em loop e não quebra; ele limpa o canal de entrada e solicita o dado novamente.
 * **Filtro Condicional de Consumo:** O cálculo da energia consumida ignora aparelhos desligados, computando estritamente a carga daqueles que terminaram o ciclo de execução como "Ligados".
 * **Relatório Tabular Consolidado:** Ao encerrar o programa, a tela é limpa e uma tabela formatada é gerada, exibindo o status final de cada cômodo, o aparelho correspondente, o consumo individual e o consumo total acumulado da casa.
 
 ---
 
-Funcionalidades do Sistema
-
-A aplicação foi projetada para ser intuitiva, segura e resiliente a falhas de operação. Suas principais funcionalidades são:
-
-* **Painel de Navegação CLI (Interface de Linha de Comando):** Um menu interativo que centraliza o acesso aos cômodos da residência.
-* **Gerenciamento de Estado Individual (Sub-menus):** Interface isolada para cada aparelho, permitindo ligar ou desligar o dispositivo e visualizar seu status atual em tempo real.
-* **Tratamento de Entradas Inválidas (Anti-Crash):** O sistema possui um mecanismo de defesa contra entradas incorretas. Se o usuário digitar letras ou símbolos onde um número é esperado, o programa não entra em loop e não quebra; ele limpa o canal de entrada e solicita o dado novamente.
-* **Filtro Condicional de Consumo:** O cálculo da energia consumida ignora aparelhos desligados, computando estritamente a carga daqueles que terminaram o ciclo de execução como "Ligados".
-* **Relatório Tabular Consolidado:** Ao encerrar o programa, a tela é limpa e uma tabela formatada é gerada, exibindo o status final de cada cômodo, o aparelho correspondente, o consumo individual e o consumo total acumulado da casa.
-
----
-
-## Conceitos Práticos de Programação Trabalhados
-
-### 1. Manipulação de Memória: Passagem por Referência vs. Valor
-Na função `monitorarComodo` , os dois conceitos são aplicados cirurgicamente para otimizar o uso da memória:
-* **Passagem por Referência (`Ponteiros *`):** O estado do aparelho (`int *estadoAparelho`) é passado através do seu endereço de memória. Isso permite a **mutação direta**. Qualquer alteração feita dentro da função altera a array original na `main`, economizando memória e eliminando a necessidade de retornos complexos.
-* **Passagem por Valor:** Variáveis como `nomeComodo` e `consumoEnergia` são passadas apenas como cópias de leitura. Isso protege os dados globais contra modificações acidentais, seguindo o princípio do privilégio mínimo de acesso.
-
-### 2. Estrutura de Dados: Paralelismo de Arrays
-Como alternativa pedagógica e funcional à criação de `structs`, o sistema utiliza **Vetores Paralelos** (`estadosAparelhos`, `nomesComodos`, `nomeAparelho`, `consumosEnergia`). 
-* A vinculação dos dados é feita através do índice `i`. 
-* Isso garante uma complexidade de tempo $O(1)$ (tempo constante) para acessar qualquer informação de um aparelho, pois basta conhecer o seu índice para recuperar todas as suas propriedades.
-
-### 3. Alocação Segura e Validação de Fronteiras 
-O código previne ativamente falhas de segmentação . Antes de direcionar o usuário para o menu de um aparelho, a função `main` valida se o índice escolhido está estritamente dentro dos limites da memória alocada para os vetores (entre 0 e 3). Tentativas de acessar índices inexistentes são interceptadas imediatamente.
----
 ## PROJETO DESENVOLVIDO POR:
 Queren Hapuque S.R.M dos Reis e Amanda Quezya Viera Farias.
