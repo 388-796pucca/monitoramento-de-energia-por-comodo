@@ -29,7 +29,7 @@ void monitorarComodo(int *estadoComodo, char nomeComodo[20], char nomeAparelho[2
     else if (opcao==2){
         if (*estadoComodo == 1){
             *estadoComodo = 0;
-            printf("sucesso !Aparelho %s no(a) foi desligado\n",nomeAparelho,nomeComodo);
+            printf("sucesso! Aparelho %s no(a) foi desligado\n",nomeAparelho,nomeComodo);
         } 
         else {
             printf("O aparelho %s já está desligado\n", nomeAparelho);
@@ -65,10 +65,23 @@ int main() {
         char status [10];
         
         printf ("\n========DISPOSITIVOS DISPONIVEIS========\n");
-        for (i=0;i<4;i++);
+        for (i=0; i<4; i++);
             strcpy(status,estadosAparelhos[i]== 1? "LIGADO" : "DESLIGADO");
             printf("%d - %s (%s) [%s]\n",i,nomeAparelho[i], nomeComodos[i],status)
     }
+    printf("\n Escolha o numero do aparelho para monitorar (ou digite -1 para encerrar e ver o relatorio): ");
     
+    if (scanf("%d",&escolhaAparelho)!= 1){
+       printf("Entrada invalida ! \n");
+       while(getchar()!='\n');
+       continue;
+    }
+    if (escolhaAparelho ==-1){
+        break;
+    }
+    if (escolhaAparelho < 0 || escolhaAparelho > 3){
+        printf("Aparelho invalido\n");
+        continue;
+    }
     return 0;
 }
